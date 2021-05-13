@@ -4,9 +4,10 @@ from asyncio import *
 import io
 import sys
 from datetime import *
+from pager import pager
+import traceback
 
 client = discord.Client()
-setClient(client)
 
 @client.event
 async def on_ready():
@@ -47,7 +48,7 @@ async def on_message(message):
             sys.stdout = old_stdout
 
         except:
-            error = str(sys.exc_info())
+            error = traceback.format_exc()
             await message.channel.send(error)
         else:
             await pager(output, message.channel.send)
