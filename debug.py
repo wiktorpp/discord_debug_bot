@@ -15,14 +15,9 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    globals().update(locals())
-
-    #on_message.msg = message
-    #on_message.message = message
-    #old_stderr = sys.stderr
-    #new_stderr = io.StringIO()
-    #sys.stderr = new_stderr
-
+    
+    #...
+    
     if message.content.startswith("$report"):
         await message.channel.send("Status: online")
 
@@ -54,9 +49,6 @@ async def on_message(message):
             await pager(output, message.channel.send)
 
     globals().update(locals())
-
-    #await message.channel.send(new_stderr.getvalue())
-    #sys.stderr = old_stderr
 
 client.run(TOKEN)
 
