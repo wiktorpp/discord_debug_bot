@@ -40,7 +40,6 @@ async def on_message(message):
                     "    locals().update(other_locals)\n"
                     f"    {request}\n"
                     "    globals().update(locals())\n"
-                    "    return return_value\n"
                     "globals().update(locals())\n"
                 )
             return_value = await request_funct(locals())
@@ -53,7 +52,7 @@ async def on_message(message):
         except KeyError:
 
             error = traceback.format_exc()
-            await message.channel.send(error)
+            await message.channel.send(f"```\n{error}\n```")
         else:
             for chunk in textwrap.wrap(output, 2000, replace_whitespace=False):
                 await message.channel.send(chunk)
