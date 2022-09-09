@@ -13,11 +13,11 @@ async def on_ready():
 async def on_message(message):
     
     #...
+
     if message.content.startswith("%"):
         import io
         import sys
         import traceback
-        import textwrap
         try:
             old_stdout = sys.stdout
             new_stdout = io.StringIO()
@@ -49,13 +49,17 @@ async def on_message(message):
 
             if return_value != None:
                 output = str(return_value) + "\n" + output
-        except KeyError:
-
+        except:
             error = traceback.format_exc()
             await message.channel.send(f"```\n{error}\n```")
         else:
-            for chunk in textwrap.wrap(output, 2000, replace_whitespace=False):
-                await message.channel.send(chunk)
+            if not len(output) > 2000:
+                await message.channel.send(output)
+            else:
+                await message.channel.send(
+                    file=discord.File(io.BytesIO(output.encode()), 
+                    filename="output.txt")
+                )
 
-client.run(TOKEN)
+client.run(TOKEN)   
 
