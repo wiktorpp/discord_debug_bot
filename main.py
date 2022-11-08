@@ -20,7 +20,7 @@ async def on_message(message):
 
     #...
 
-    if message.content.startswith("%"):
+    if message.content.startswith(debug.alias):
         await debug.run_message(message, locals())
 
 client.run(TOKEN)   

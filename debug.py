@@ -3,7 +3,18 @@ import sys
 import traceback
 import discord
 
+enable = True
+alias = "%"
+
+print(f"\033[31mDebbuging enabled!!!\033[39m")
+
 async def run_message(message, other_locals):
+    if not enable:
+        return
+
+    if not message.content.startswith(alias):
+        return
+
     try:
         old_stdout = sys.stdout
         new_stdout = io.StringIO()
