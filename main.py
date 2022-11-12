@@ -4,7 +4,7 @@ import debug
 
 #import ...
 
-client = discord.Client()
+client = discord.Client(intents=discord.Intents.all())
 
 @client.event
 async def on_ready():
