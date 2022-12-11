@@ -39,17 +39,17 @@ async def run_message(message, other_locals):
                 "    globals().update(locals())\n"
                 "globals().update(locals())\n"
             )
-        return_value = await request_funct(locals())
-
-        output = new_stdout.getvalue()
-        sys.stdout = old_stdout
-
-        if return_value != None:
-            output = str(return_value) + "\n" + output
+        return_value = await request_funct(locals())        
     except Exception:
+        output = new_stdout.getvalue()
         error = traceback.format_exc()
-        await message.channel.send(f"```\n{error}\n```")
+        await message.channel.send(f"{output}```\n{error}\n```")
     else:
+        if return_value == None:
+            output = new_stdout.getvalue()
+        else:
+            output = str(return_value) + "\n" + output
+
         if not len(output) > 2000:
             await message.channel.send(output)
         else:
@@ -57,3 +57,5 @@ async def run_message(message, other_locals):
                 file=discord.File(io.BytesIO(output.encode()), 
                 filename="output.txt")
             )
+    finally:
+        sys.stdout = old_stdout
