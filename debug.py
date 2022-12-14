@@ -5,6 +5,7 @@ import discord
 
 enable = True
 alias = "%"
+request_funct = None
 
 print(f"\033[31mDebbuging enabled!!!\033[39m")
 
@@ -28,16 +29,16 @@ async def run_message(message, other_locals):
                 f"    return_value = ({request_str})\n"
                 "    globals().update(locals())\n"
                 "    return return_value\n"
-                "globals().update(locals())\n"
+                "globals().update({\"request_funct\": request_funct})\n"
             )
         except:
-            request = request.replace('\n', '\n    ')
+            request_str = request_str.replace('\n', '\n    ')
             exec(
                 "async def request_funct(other_locals):\n"
                 "    locals().update(other_locals)\n"
                 f"    {request_str}\n"
                 "    globals().update(locals())\n"
-                "globals().update(locals())\n"
+                "globals().update({\"request_funct\": request_funct})\n"
             )
         return_value = await request_funct(locals())        
     except Exception:
