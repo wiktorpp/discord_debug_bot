@@ -31,7 +31,7 @@ async def run_message(message, other_locals):
                 "    return return_value\n"
                 "globals().update({\"request_funct\": request_funct})\n"
             )
-        except:
+        except SyntaxError:
             request_str = request_str.replace('\n', '\n    ')
             exec(
                 "async def request_funct(other_locals):\n"
