@@ -7,7 +7,8 @@ enable = True
 alias = "%"
 request_funct = None
 
-print(f"\033[31mDebbuging enabled!!!\033[39m")
+if enable:
+    print(f"\033[31mDebbuging enabled!!!\033[39m")
 
 async def run_message(message, other_locals):
     if not enable:
